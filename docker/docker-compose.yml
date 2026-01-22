@@ -1,0 +1,11 @@
+services:
+  googlefmd-backend:
+    build:
+      context: ./backend
+    container_name: googlefmd-backend
+    restart: unless-stopped
+    ports:
+      - "8123:8000"
+    volumes:
+      # Mount your secrets.json here (outside the image)
+      - ./secrets/secrets.json:/data/secrets.json:ro

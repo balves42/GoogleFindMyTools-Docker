@@ -111,7 +111,10 @@ iOSInjectionProject/
 # Xcode
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-docker/secrets/secrets.json
+
+
+
+
 
 ## Playgrounds
 timeline.xctimeline
