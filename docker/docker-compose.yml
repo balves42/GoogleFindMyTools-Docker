@@ -2,10 +2,21 @@ services:
   googlefmd-backend:
     build:
       context: ./backend
-    container_name: googlefmd-backend
+    container_name: googlefmd-backend_history
     restart: unless-stopped
     ports:
       - "8123:8000"
+    environment:
+      # Where to store the local history DB (persist with the volume below)
+      - DB_PATH=/data/db/fmd_history.db
+      # Background locate polling to build history
+      - LOCATE_POLL_ENABLED=true
+      - LOCATE_POLL_INTERVAL_MINUTES=5
+      - LOCATE_POLL_TIMEOUT_SECONDS=60
+      - HISTORY_MIN_DISTANCE_METERS=${HISTORY_MIN_DISTANCE_METERS:-25}
     volumes:
       # Mount your secrets.json here (outside the image)
       - ./secrets/secrets.json:/data/secrets.json:ro
+      # Persist our location history database (set FMD_DB_PATH in .env to customize host path)
+      # Persist location history directory (set FMD_DB_DIR in .env to customize host folder)
+      - ${FMD_DB_DIR:-./db}:/data/db:rw
